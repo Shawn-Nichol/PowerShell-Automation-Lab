@@ -91,8 +91,8 @@ Through this project I am working toward the ability to:
 ### 🛡️ Cycle 7: Reliable Investigations
 
 ✅ Error Handling Basics  
-⬜ Try/Catch  
-⬜ Verbose Output  
+✅ Try/Catch  
+✅ Verbose Output  
 ⬜ Logging Errors  
 ⬜ Challenge: Recover a Failing Investigation Script  
 
