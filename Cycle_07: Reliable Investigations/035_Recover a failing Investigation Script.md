@@ -76,6 +76,10 @@ function Investigate-Process {
 
     }
 }
+
+<img width="685" height="483" alt="image" src="https://github.com/user-attachments/assets/1a7d2955-9dbb-42fe-b3a2-e6cc8bfd2987" />
+
+
 ```
 
 ### Example Usage
@@ -86,15 +90,12 @@ Investigate-Process -ProcessName explorer
 
 Example Output:
 
-```text
-Investigation Started - 11/16/2026 13:22:41
 
-explorer process information
 
-Investigation Complete - 11/16/2026 13:22:41
-```
+<img width="568" height="117" alt="image" src="https://github.com/user-attachments/assets/f34a09a1-9f13-4bdd-a21c-8bebff7dc2d8" />
 
-SCREENSHOT_HERE
+<img width="560" height="171" alt="image" src="https://github.com/user-attachments/assets/64926442-3016-4d17-9dbd-b2b32c924d4b" />
+
 
 ---
 
@@ -106,27 +107,9 @@ Investigate-Process -ProcessName NoProcess
 
 Example Output:
 
-```text
-Investigation Started - 11/16/2026 13:19:56
+<img width="451" height="71" alt="image" src="https://github.com/user-attachments/assets/53e0ab9a-4876-45b8-943b-159d07976836" />
 
-NoProcess doesn't exist
-
-Investigation Complete - 11/16/2026 13:19:56
-```
-
-SCREENSHOT_HERE
-
----
-
-### Example Investigation Log
-
-```text
-Investigation Started - 11/16/2026 13:19:56
-NoProcess doesn't exist
-Investigation Complete - 11/16/2026 13:19:56
-```
-
-SCREENSHOT_HERE
+<img width="410" height="80" alt="image" src="https://github.com/user-attachments/assets/55d91ac7-1696-4cc7-a496-db15fd7cfd39" />
 
 ---
 
