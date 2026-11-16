@@ -94,6 +94,8 @@ Example Output:
 
 <img width="568" height="117" alt="image" src="https://github.com/user-attachments/assets/f34a09a1-9f13-4bdd-a21c-8bebff7dc2d8" />
 
+<br>
+
 <img width="560" height="171" alt="image" src="https://github.com/user-attachments/assets/64926442-3016-4d17-9dbd-b2b32c924d4b" />
 
 
@@ -108,6 +110,8 @@ Investigate-Process -ProcessName NoProcess
 Example Output:
 
 <img width="451" height="71" alt="image" src="https://github.com/user-attachments/assets/53e0ab9a-4876-45b8-943b-159d07976836" />
+
+<br>
 
 <img width="410" height="80" alt="image" src="https://github.com/user-attachments/assets/55d91ac7-1696-4cc7-a496-db15fd7cfd39" />
 
