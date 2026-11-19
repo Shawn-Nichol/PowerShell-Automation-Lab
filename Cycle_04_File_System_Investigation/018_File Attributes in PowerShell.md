@@ -85,7 +85,30 @@ BCUninstaller_6.2.0_setup.exe
 Get-ChildItem -Force
 ```
 
-*[screenshot removed]*
+```text
+PS C:\Downloads> Get-ChildItem -Force
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----            8/5/2026 10:48 AM                DetectabilityHistoryL50067
+d----            8/4/2026  4:14 PM                Psw
+d----          12/12/2025  3:12 PM                SennheiserAssetCollection-2025-12-12 22_12
+d----           7/21/2026  2:24 PM                [REDACTED]
+-a-h-           9/25/2025 10:48 AM            162 ~$ble labels WOA .docx
+-a-h-           7/17/2024  9:49 PM            162 ~$itical Thinking Touchstone 4.docx
+-a-h-          10/28/2025  1:30 PM            162 ~$ndows11_Minimum_Requirement_Check_Commands [REDACTED].docx
+-a-h-          11/10/2025 11:28 AM            162 ~$rformance Through Partnership - F2026 Coaching Guide.docx
+-a-h-           9/24/2025  5:03 PM          21860 ~WRL0005.tmp
+-a-h-           7/15/2024 11:30 PM          34360 ~WRL0284.tmp
+-a-h-           11/4/2025  3:46 PM          88663 ~WRL1962.tmp
+-a-h-           7/20/2024 12:48 AM          33773 ~WRL3265.tmp
+-a---           5/22/2026  1:44 PM         584025 08-May-2026_APL_-_General_Req_2024.pdf
+-a---            6/5/2026  4:20 PM        1664003 100_days_of_python.png
+-a---           11/6/2025  5:01 PM         373862 2766984423725746459.jpeg
+-a---           11/6/2025  5:01 PM         757413 6892374335223057544.jpeg
+```
 
 
 ### Locate Hidden Files
@@ -95,7 +118,24 @@ Get-ChildItem -Force |
     Where-Object Attributes -like "*Hidden*"
 ```
 
-*[screenshot removed]*
+```text
+PS C:\Downloads> Get-ChildItem -Force |
+>>     Where-Object Attributes -like "*Hidden*"
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a-h-           9/25/2025 10:48 AM            162 ~$ble labels WOA .docx
+-a-h-           7/17/2024  9:49 PM            162 ~$itical Thinking Touchstone 4.docx
+-a-h-          10/28/2025  1:30 PM            162 ~$ndows11_Minimum_Requirement_Check_Commands [REDACTED].docx
+-a-h-          11/10/2025 11:28 AM            162 ~$rformance Through Partnership - F2026 Coaching Guide.docx
+-a-h-           9/24/2025  5:03 PM          21860 ~WRL0005.tmp
+-a-h-           7/15/2024 11:30 PM          34360 ~WRL0284.tmp
+-a-h-           11/4/2025  3:46 PM          88663 ~WRL1962.tmp
+-a-h-           7/20/2024 12:48 AM          33773 ~WRL3265.tmp
+-a-hs           12/7/2025 10:12 PM            282 desktop.ini
+```
 
 
 ### Review Downloads Folder Attributes
@@ -105,7 +145,29 @@ Get-ChildItem "$env:USERPROFILE\Downloads" -Force |
     Select-Object Name, Attributes
 ```
 
-*[screenshot removed]*
+```text
+PS C:\Downloads> Get-ChildItem "$env:USERPROFILE\Downloads" -Force |
+>>     Select-Object Name, Attributes
+
+Name                                                                 Attributes
+----                                                                 ----------
+DetectabilityHistoryL50067                                            Directory
+Psw                                                                   Directory
+SennheiserAssetCollection-2025-12-12 22_12                            Directory
+[REDACTED]                                                            Directory
+~$ble labels WOA .docx                                           Hidden, Archive
+~$itical Thinking Touchstone 4.docx                              Hidden, Archive
+~$ndows11_Minimum_Requirement_Check_Commands [REDACTED].docx     Hidden, Archive
+~$rformance Through Partnership - F2026 Coaching Guide.docx      Hidden, Archive
+~WRL0005.tmp                                                     Hidden, Archive
+~WRL0284.tmp                                                     Hidden, Archive
+~WRL1962.tmp                                                     Hidden, Archive
+~WRL3265.tmp                                                     Hidden, Archive
+08-May-2026_APL_-_General_Req_2024.pdf                                  Archive
+100_days_of_python.png                                                  Archive
+2766984423725746459.jpeg                                                Archive
+6892374335223057544.jpeg                                                Archive
+```
 
 
 ---

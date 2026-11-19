@@ -53,7 +53,19 @@ Get-Process |
     Export-Csv "$env:USERPROFILE\Desktop\ProcessInventory.csv" -NoTypeInformation
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-Process |
+>>     Select-Object ProcessName, Id |
+>>     Export-Csv "$env:USERPROFILE\Documents\ProcessInventory.csv" -NoTypeInformation
+PS C:\> Get-ChildItem "$env:USERPROFILE\Documents\" |
+>>     Where-Object Name -Like "Process*"
+
+    Directory: C:\Documents
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           9/18/2026  3:35 PM           7943 ProcessInventory.csv
+```
 
 
 ### Export a Downloads Inventory
@@ -66,7 +78,19 @@ Get-ChildItem "$env:USERPROFILE\Downloads" |
     Export-Csv "$env:USERPROFILE\Desktop\DownloadsInventory.csv" -NoTypeInformation
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-ChildItem "$env:USERPROFILE\Downloads" |
+>>     Select-Object Name, Length, LastWriteTime |
+>>     Export-Csv "$env:USERPROFILE\Documents\DownloadsInventory.csv" -NoTypeInformation
+PS C:\> Get-ChildItem "$env:USERPROFILE\Documents\" |
+>>     Where-Object Name -Like "Downloads*"
+
+    Directory: C:\Documents
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           9/18/2026  3:58 PM          11985 DownloadsInventory.csv
+```
 
 ---
 
@@ -79,7 +103,20 @@ Get-ChildItem "$env:USERPROFILE\Downloads" |
     Export-Csv "$env:USERPROFILE\Desktop\Executables.csv" -NoTypeInformation
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-ChildItem "$env:USERPROFILE\Downloads" |
+>>     Where-Object Extension -eq ".exe" |
+>>     Select-Object Name, Length, LastWriteTime |
+>>     Export-Csv "$env:USERPROFILE\Documents\Executables.csv" -NoTypeInformation
+PS C:\> Get-ChildItem "$env:USERPROFILE\Documents\" |
+>>     Where-Object Name -Like "Exe*"
+
+    Directory: C:\Documents
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           9/18/2026  4:01 PM           1769 Executables.csv
+```
 
 
 ---
