@@ -1,57 +1,39 @@
-# 🛡️ Lesson 010: SOC Investigation Challenge - Suspicious Service Check
-[![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-5391FE?logo=powershell&logoColor=white)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Category](https://img.shields.io/badge/Category-Decision%20Making%20%26%20Reporting-blue)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Security](https://img.shields.io/badge/Security-SOC%20Investigation-red)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Concept](https://img.shields.io/badge/Concept-Service%20Triage%20%26%20Parsing-orange)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
+# 🛡️ Suspicious Service Investigation
+
+![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-blue?style=flat-square&logo=powershell&logoColor=white) ![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green?style=flat-square) ![Category](https://img.shields.io/badge/Category-Decision%20Making%20%26%20Reporting-informational?style=flat-square) ![Security](https://img.shields.io/badge/Security-SOC%20Investigation-orange?style=flat-square) ![Project](https://img.shields.io/badge/Project-Suspicious%20Service%20Investigation-purple?style=flat-square)
+
+---
 
 ## 📌 Executive Summary
 
-This challenge required building an interactive PowerShell investigation script to determine whether a Windows service exists and identify its current status.
+**Core Technical Focus:**
+Built an interactive script that takes a service name from the analyst, checks whether it exists with `Get-Service`, and reports its status and start type in a structured object.
 
-The objective was to apply variables, user input, conditional logic, and service enumeration to perform a basic SOC-style investigation and generate useful information for further analysis.
+**Defensive Impact:**
+Gives analysts a quick, repeatable way to verify a service named in an alert before deciding whether deeper investigation is needed.
 
+---
 
-## 🎯 Challenge Scenario
+## 🎯 Objective & Challenge
 
-A security alert indicated that a Windows service may be involved in suspicious activity.
+*Determine whether a service named in a security alert exists, whether it is running, and what to collect next.*
 
-As the investigating analyst, I needed to determine:
+---
 
-- Whether the service exists.
-- Whether the service is currently running.
-- What information should be gathered next if additional investigation is required.
+## 🔐 Cybersecurity Context
 
+A security alert indicated that a Windows service may be involved in suspicious activity. Attackers often create or modify services to gain persistence, so an analyst needs to answer quickly:
 
-## 🔎 Questions to Answer
+- Does the service exist?
+- Is it currently running?
+- What is its startup configuration?
+- What should be collected next to decide whether it is legitimate?
 
-### 1. Does the service exist?
+---
 
-### 2. What is the service's current status?
+## 🛠️ Implementation & Code
 
-### 3. What additional information would help determine whether the service is legitimate or suspicious?
-
-Examples:
-
-- Service owner
-- Associated executable
-- Running process information
-- Application purpose
-- Startup configuration
-
-
-## 🧠 Investigation Approach
-
-To answer these questions, I:
-
-1. Prompted the analyst for a service name.
-2. Queried the service using `Get-Service`.
-3. Verified whether the service existed.
-4. Reviewed the current service status.
-5. Generated an investigation report containing key service details.
-
-
-## 💻 My Solution
+### Service Investigation Script
 
 ```powershell
 # Get user input (Store as a string)
@@ -80,51 +62,75 @@ else {
 
 }
 ```
+
+### Example Usage
+
+```text
+Enter service: spooler
+```
+
+Example Output:
+
 <img width="412" height="123" alt="image" src="https://github.com/user-attachments/assets/fd8927ea-3a20-487d-ba2c-0b500bde2980" />
 
+---
 
-## 🎯 Investigation Results
-
-The script successfully:
-
-- Accepted analyst input.
-- Checked whether the service existed.
-- Identified the service status.
-- Displayed service information in a readable format.
-- Generated a basic investigation report.
-
-
-## 🧠 What I Learned
-
-- Learned how to build an interactive investigation script using `Read-Host`.
-- Applied conditional logic to validate evidence.
-- Used `Get-Service` to investigate Windows services.
-- Practiced using objects to present investigation results.
-- Learned that determining whether a service exists is only the first step of an investigation.
-
-
-## 🔐 Analyst Reflection
+### Analyst Assessment
 
 A service being present and running does not automatically mean it is legitimate.
 
 Additional evidence that should be collected during a security investigation includes:
 
 - Service executable path
-- Service owner
+- Service owner / account
 - Digital signature information
 - Startup type
 - Associated processes
 - Network activity
 - Business purpose
 
-This challenge reinforced the idea that cybersecurity investigations focus on gathering and validating evidence before making conclusions.
+Confirming that a service exists is only the first step of an investigation.
 
+---
 
-## ✅ Challenge Outcome
+## 🆕 New Command Introduced
 
-Completed the Service Health Investigation Challenge by creating a PowerShell script that:
+### Read-Host
 
-- Accepts user input.
-- Validates service existence.
-- Reports service status.
-- Produces investigation output suitable for initial SOC triage.
+This project introduced the `Read-Host` cmdlet to address **making a script reusable for any service name instead of hard-coding one**.
+
+Example:
+
+```powershell
+$serviceName = Read-Host "Enter service"
+```
+
+### Why It Was Useful
+
+Without `Read-Host`, the script would need editing every time a different service was investigated. Prompting the analyst for input turned a one-off command into a small, reusable investigation tool.
+
+### Comparison
+
+| Approach | Benefit | Limitation |
+|-----------|-----------|-----------|
+| Hard-coded service name | Simple | Must edit the script for every investigation |
+| `Read-Host` input | Reusable for any service | Interactive only; not suited to automation |
+
+---
+
+## ✅ Key Takeaways
+
+- **Interactive Investigation:** Used `Read-Host` to build a script that works for any service.
+- **Conditional Logic:** Used `if`/`else` to handle both found and missing services cleanly.
+- **Structured Reporting:** Presented results as a `PSCustomObject` for consistent, readable output.
+- **Investigation Mindset:** Identified what evidence to collect next instead of stopping at "it exists".
+
+---
+
+## 🧠 Lessons Learned
+
+This challenge combined variables, user input, conditional logic, and service enumeration into one workflow. Instead of running several separate commands, the script validates the service, reports its state, and handles the "not found" case without throwing errors. The main lesson was that investigations are about gathering and validating evidence before reaching conclusions.
+
+### New Concepts Integration
+
+`Read-Host` made the script reusable. The same logic now works for any service an alert names, which is the first step toward the parameterized functions built later in Cycle 6.

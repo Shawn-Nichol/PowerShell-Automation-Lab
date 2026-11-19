@@ -1,46 +1,39 @@
 # 🛡️ Workstation Triage Investigation
 
-[![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-5391FE?logo=powershell&logoColor=white)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Category](https://img.shields.io/badge/Category-System%20Triage-blue)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Security](https://img.shields.io/badge/Security-Incident%20Response-red)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Concept](https://img.shields.io/badge/Concept-Investigation-orange)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
+![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-blue?style=flat-square&logo=powershell&logoColor=white) ![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green?style=flat-square) ![Category](https://img.shields.io/badge/Category-Process%20%26%20Service%20Triage-informational?style=flat-square) ![Security](https://img.shields.io/badge/Security-Incident%20Response-orange?style=flat-square) ![Project](https://img.shields.io/badge/Project-Workstation%20Triage%20Investigation-purple?style=flat-square)
 
+---
 
 ## 📌 Executive Summary
 
-This challenge applied the PowerShell skills learned during Learning Cycle 1 to perform a basic workstation triage investigation. The objective was to determine whether a user's complaint of poor system performance was supported by available evidence and to identify any processes or services requiring further review.
+**Core Technical Focus:**
+Used `Get-Process` and `Get-Service` with property selection, filtering, and sorting to triage a workstation without making any changes to it.
 
-Using PowerShell, I analyzed running processes, identified non-responsive applications, reviewed memory consumption, and verified service status without making any changes to the workstation.
+**Defensive Impact:**
+Gives an analyst a fast, read-only way to check whether a user's performance complaint is backed by evidence and to spot processes or services that need a closer look.
 
-## 🎯 Learning Objective
+---
 
-Apply PowerShell fundamentals to perform a structured workstation investigation using:
+## 🎯 Objective & Challenge
 
-- Process enumeration
-- Property selection
-- Filtering
-- Sorting
-- Service inspection
+*Determine whether a user's report of poor system performance is supported by evidence, and identify any processes or services that require further review.*
 
+---
 
-## 🔐 Cybersecurity Application
+## 🔐 Cybersecurity Context
 
-Workstation triage is a common activity during incident response and troubleshooting. Analysts use PowerShell to gather system information, identify anomalies, and determine whether additional investigation is required.
+Workstation triage is one of the first steps in incident response and troubleshooting. Before escalating, an analyst needs to know:
 
-This exercise demonstrated how PowerShell can be used to quickly collect evidence while preserving system state.
+- Are any applications hung or unresponsive?
+- What is consuming the most memory?
+- Are core services running as expected?
+- Is there anything unusual that points to compromise rather than a normal performance issue?
 
+Doing this with read-only PowerShell commands preserves the system state while the evidence is collected.
 
-## ✅ Key Takeaways
+---
 
-- Used PowerShell to investigate system performance concerns.
-- Identified non-responsive applications through process filtering.
-- Ranked processes by memory consumption.
-- Verified the operational state of critical Windows services.
-- Practiced documenting findings using an analyst mindset.
-
-
-## 💻 PowerShell Commands Used
+## 🛠️ Implementation & Code
 
 ### Identify Non-Responsive Processes
 
@@ -48,8 +41,8 @@ This exercise demonstrated how PowerShell can be used to quickly collect evidenc
 Get-Process |
 Where-Object Responding -eq $false |
 Select-Object ProcessName,
-              Id,
-              Responding
+Id,
+Responding
 ```
 
 ### Find Top Memory Consumers
@@ -57,8 +50,8 @@ Select-Object ProcessName,
 ```powershell
 Get-Process |
 Select-Object ProcessName,
-              Id,
-              WorkingSet64 |
+Id,
+WorkingSet64 |
 Sort-Object WorkingSet64 -Descending |
 Select-Object -First 10
 ```
@@ -69,24 +62,23 @@ Select-Object -First 10
 Get-Service |
 Where-Object Status -eq 'Running' |
 Select-Object Name,
-              Status |
+Status |
 Select-Object -First 10
 ```
 
 ---
 
-## 🔎 Investigation Findings
+### Investigation Findings
 
-### Non-Responding Processes
+#### Non-Responding Processes
 
 | Process Name | PID |
 |-------------|------|
 | SystemSettings | 24296 |
 
-One non-responsive application was identified. The process appeared to be the Windows Settings application.
+One non-responsive application was identified: the Windows Settings application.
 
-
-### Top Memory Consumers
+#### Top Memory Consumers
 
 | Process Name | PID | Working Set (Bytes) |
 |-------------|------|-------------------:|
@@ -96,10 +88,9 @@ One non-responsive application was identified. The process appeared to be the Wi
 | Grammarly.Desktop | 14348 | 358,510,592 |
 | msedgewebview2 | 18040 | 346,906,624 |
 
-The highest memory consumers included Windows Memory Compression, the enterprise endpoint security (EDR) agent, Chrome, Grammarly Desktop, and Microsoft Edge WebView2.
+The highest memory consumers were Windows Memory Compression, the endpoint security (EDR) agent, Chrome, Grammarly Desktop, and Microsoft Edge WebView2.
 
-
-### Running Services Reviewed
+#### Running Services Reviewed
 
 | Service Name | Status |
 |-------------|---------|
@@ -111,41 +102,59 @@ The highest memory consumers included Windows Memory Compression, the enterprise
 
 The reviewed services appeared healthy and operational.
 
+### Analyst Assessment
 
-## 🧠 Analyst Assessment
+The workstation appeared generally healthy.
 
-The workstation appeared generally healthy during this investigation.
+One non-responsive process (`SystemSettings`) was identified, but on its own this does not indicate malicious activity. It is a standard Windows component and may have been temporarily unresponsive.
 
-One non-responsive process (`SystemSettings`) was identified, but this alone does not indicate malicious activity or system compromise. The process is associated with a standard Windows component and may have been temporarily unresponsive.
+Windows Memory Compression and the EDR agent were the largest memory consumers. Both are expected system components and do not suggest suspicious behavior.
 
-Memory analysis revealed that Windows Memory Compression and the endpoint security (EDR) agent were consuming the largest amounts of memory. Both are expected system components and do not immediately suggest suspicious behavior.
+Core Windows and audio services were running normally. No unusual process names, service failures, or obvious indicators of compromise were observed.
 
-Service review confirmed that core Windows and audio-related services were operating normally. No unusual process names, service failures, or obvious indicators of compromise were observed.
-
-Based on the evidence collected, the user's report of reduced performance is plausible; however, no indicators of malicious activity were identified during this initial triage.
+The user's report of reduced performance is plausible; however, no indicators of malicious activity were identified during this initial triage.
 
 ---
 
-## 🧠 What I Learned
+## 🆕 New Command Introduced
 
-- How to investigate a workstation using PowerShell without making system changes.
-- How to identify non-responsive applications.
-- How to sort and analyze processes based on memory usage.
-- How to use service status information to assess system health.
-- How to document findings in an incident-style report.
+### Where-Object
 
-
-## 🚀 Next Step
-
-Begin Learning Cycle 2 by learning how to use variables to store investigation results and reuse collected data during analysis.
+This project introduced the `Where-Object` cmdlet to address **finding the few relevant records in a full process or service list**.
 
 Example:
 
 ```powershell
-$Processes = Get-Process
-
-$Processes |
-Where-Object WorkingSet64 -gt 500MB
+Get-Process |
+Where-Object Responding -eq $false
 ```
 
-This introduces the foundation of PowerShell automation and repeatable investigations.
+### Why It Was Useful
+
+`Get-Process` returns hundreds of objects. `Where-Object` reduced that to only the processes that were not responding, which turned a long list into a direct answer to the investigation question.
+
+### Comparison
+
+| Approach | Benefit | Limitation |
+|-----------|-----------|-----------|
+| Reading full `Get-Process` output | Shows everything | Easy to miss the one record that matters |
+| `Where-Object` filter | Returns only matching objects | Requires knowing which property to filter on |
+
+---
+
+## ✅ Key Takeaways
+
+- **Read-Only Triage:** Investigated a workstation using PowerShell without making any system changes.
+- **Targeted Filtering:** Used `Where-Object` to isolate non-responsive applications.
+- **Resource Analysis:** Ranked processes by memory consumption to explain performance complaints.
+- **Evidence-Based Reporting:** Documented findings in an incident-style report rather than relying on assumptions.
+
+---
+
+## 🧠 Lessons Learned
+
+This challenge brought together the core Cycle 1 skills (process enumeration, property selection, filtering, sorting, and service inspection) into one structured workflow. Instead of scrolling through raw output, each command answered a specific question, and the results built toward a clear assessment: the performance complaint was plausible, but there was no sign of compromise.
+
+### New Concepts Integration
+
+`Where-Object` was the key addition. It turns PowerShell from a tool that lists everything into one that answers questions, such as "which processes are not responding?" This filtering pattern is the foundation for every later investigation in this lab.

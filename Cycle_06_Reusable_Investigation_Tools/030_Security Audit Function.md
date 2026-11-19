@@ -1,55 +1,40 @@
 # 🛡️ Security Audit Function
 
-![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-blue?style=for-the-badge&logo=powershell&logoColor=white)
-![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green?style=for-the-badge)
-![Category](https://img.shields.io/badge/Category-Reusable%20Investigation%20Tools-orange?style=for-the-badge)
-![Security](https://img.shields.io/badge/Security-Security%20Auditing-critical?style=for-the-badge)
-![Project](https://img.shields.io/badge/Project-Security%20Audit%20Function-informational?style=for-the-badge)
+![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-blue?style=flat-square&logo=powershell&logoColor=white) ![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green?style=flat-square) ![Category](https://img.shields.io/badge/Category-Reusable%20Investigation%20Tools-informational?style=flat-square) ![Security](https://img.shields.io/badge/Security-Security%20Auditing-orange?style=flat-square) ![Project](https://img.shields.io/badge/Project-Security%20Audit%20Function-purple?style=flat-square)
 
 ---
 
 ## 📌 Executive Summary
 
-This challenge focused on building a reusable PowerShell security audit function capable of collecting baseline workstation information. The function automated the collection of process counts, service counts, download inventory counts, and workstation details, returning the information in a structured format suitable for reporting and export.
+**Core Technical Focus:**
+Built a reusable `Get-SecurityAudit` function that takes the analyst's name as a parameter and returns a `PSCustomObject` with the computer name, service count, process count, and Downloads file count, ready to export.
+
+**Defensive Impact:**
+Turns a set of manual baseline commands into one consistent tool, so every workstation audit collects the same evidence in the same format.
 
 ---
 
-## 🎯 Challenge Scenario
+## 🎯 Objective & Challenge
 
-The objective was to create a reusable investigation tool that could quickly gather workstation information and provide a consistent audit report for analysts.
-
-Rather than executing multiple individual commands, the function collects the information automatically and presents it in a structured format.
+*Create a reusable function that collects workstation baseline information and returns it in a structured, exportable format.*
 
 ---
 
-## 🔐 Cybersecurity Application
+## 🔐 Cybersecurity Context
 
-Security analysts frequently collect baseline information during investigations and audits.
+Security analysts frequently collect baseline information during investigations and audits. Running the same commands by hand on every machine is slow and inconsistent.
 
-Reusable PowerShell functions help:
+Reusable functions help:
 
 - Standardize evidence collection
-- Reduce manual effort
-- Improve consistency
-- Support reporting workflows
-- Lay the foundation for security automation
-
-Functions like this can be expanded in future lessons to include event logs, network information, users, services, and additional investigation data.
+- Reduce manual effort and mistakes
+- Record who performed the audit
+- Feed reporting workflows
+- Lay the foundation for broader security automation
 
 ---
 
-## ✅ Key Takeaways
-
-- Created a reusable PowerShell function.
-- Used function parameters to identify the analyst.
-- Returned investigation results using PSCustomObject.
-- Combined multiple evidence sources into a single tool.
-- Exported collected data for reporting purposes.
-- Built a reusable security audit utility.
-
----
-
-## 💻 PowerShell Commands
+## 🛠️ Implementation & Code
 
 ### Security Audit Function
 
@@ -61,42 +46,45 @@ function Get-SecurityAudit {
     )
 
     [PSCustomObject]@{
-        AnalystName = $Name
+        AnalystName  = $Name
         ComputerName = $env:COMPUTERNAME
-        Services = (Get-Service).Count
-        Processes = (Get-Process).Count
-        Downloads = (Get-ChildItem "$env:USERPROFILE\Downloads").Count
+        Services     = (Get-Service).Count
+        Processes    = (Get-Process).Count
+        Downloads    = (Get-ChildItem "$env:USERPROFILE\Downloads").Count
+        Assessment   = "Baseline audit Completed"
     }
 }
 ```
 
 <img width="661" height="244" alt="image" src="https://github.com/user-attachments/assets/2d4be951-9594-416f-aa11-afd58bb7ff96" />
 
-
----
-
-### Execute Security Audit
+### Example Usage
 
 ```powershell
-Get-SecurityAudit -Name "Shawn"
-```
-
-Output:
-
-```text
-AnalystName  : Shawn
-ComputerName : ###########
-Services     : 323
-Processes    : 362
-Downloads    : 200
+$ComputerInfo = Get-SecurityAudit -Name "Shawn"
+$ComputerInfo
 ```
 
 <img width="598" height="19" alt="image" src="https://github.com/user-attachments/assets/6363e683-3726-4d9a-ab76-ab6b01c9031e" />
 
+Example Output:
+
+```text
+AnalystName  : Shawn
+ComputerName : [REDACTED]
+Services     : 323
+Processes    : 363
+Downloads    : 200
+Assessment   : Baseline audit Completed
+```
+
+<img width="336" height="106" alt="image" src="https://github.com/user-attachments/assets/7a0a64bc-51a2-49fb-aa8c-81084915200b" />
 
 ---
 
-### Export Results
+### Additional Examples
+
+#### Export Results
 
 ```powershell
 $ComputerInfo |
@@ -105,62 +93,67 @@ $ComputerInfo |
 
 <img width="600" height="32" alt="image" src="https://github.com/user-attachments/assets/c32be348-7526-496b-8a40-d6f047a60e9b" />
 
+The audit report was exported to `Summary.csv`, preserving the results for sharing and later comparison.
 
 ---
 
-## 🧠 What I Learned
+### Analyst Assessment
 
-- Built a reusable PowerShell security audit tool.
-- Used a parameter to personalize audit results.
-- Collected evidence from multiple system sources.
-- Returned structured data using PSCustomObject.
-- Combined previous PowerShell concepts into a practical security utility.
-- Exported investigation data for future review.
+The function collected:
 
----
+- Analyst name
+- Computer name
+- Service count
+- Running process count
+- Downloads folder inventory count
 
-## 🔍 Investigation Notes
-
-### Security Audit Results
-
-<img width="336" height="106" alt="image" src="https://github.com/user-attachments/assets/7a0a64bc-51a2-49fb-aa8c-81084915200b" />
-
-
-The function successfully collected workstation information and returned it as a reusable PowerShell object.
+This provides a basic workstation baseline that can be compared against future audits. The function can be extended to include event logs, network connections, local users, and installed software.
 
 ---
 
-### Evidence Sources Collected
+## 🆕 New Command Introduced
 
-The audit gathered:
+### function with Param()
 
-- Computer Name
-- Running Process Count
-- Service Count
-- Downloads Folder Inventory
+This project combined `function` and `Param()` to address **repeating the same multi-command audit by hand on every workstation**.
 
-This information provides a basic workstation baseline that can be used during future investigations.
+Example:
 
----
-
-### Export Verification
-
-The audit report was successfully exported to:
-
-```text
-Summary.csv
+```powershell
+function Get-SecurityAudit {
+    Param(
+        $Name
+    )
+    # audit logic
+}
 ```
 
-This demonstrates how structured investigation results can be preserved and shared.
+### Why It Was Useful
+
+Wrapping the audit in a function means it runs with one command and always collects the same fields. The `$Name` parameter records who performed the audit, which matters when evidence is reviewed later.
+
+### Comparison
+
+| Approach | Benefit | Limitation |
+|-----------|-----------|-----------|
+| Individual commands | Flexible | Inconsistent between runs and analysts |
+| Parameterized function | Repeatable, consistent output | Needs updating as requirements grow |
 
 ---
 
-## 🧠 Analyst Reflection
+## ✅ Key Takeaways
 
-This challenge demonstrated how PowerShell functions can be transformed into practical cybersecurity tools.
+- **Reusable Tooling:** Built a function that performs a full baseline audit with one command.
+- **Analyst Attribution:** Used a parameter to record who performed the audit.
+- **Structured Output:** Returned results as a `PSCustomObject` so they can be filtered, formatted, or exported.
+- **Evidence Preservation:** Exported the audit to CSV for reporting and comparison.
 
-Instead of running multiple commands manually, the security audit function provides a repeatable and consistent method of gathering evidence from a workstation.
+---
 
-The ability to collect, organize, and export information through a single function is a foundational automation skill for SOC analysts, incident responders, and system administrators.
+## 🧠 Lessons Learned
 
-Building reusable tools not only saves time but also improves the consistency and quality of investigation results.
+This challenge pulled together everything from the first six cycles: commands, variables, objects, reporting, and functions. Instead of running several commands manually, one function now gathers a consistent baseline and returns it in a form that can be exported or compared. That consistency is what makes results trustworthy across different machines and different analysts.
+
+### New Concepts Integration
+
+Functions with parameters are the step from scripting to tooling. Once the audit logic lives in `Get-SecurityAudit`, it can be reused, extended, and eventually run against multiple machines, which is where the remote investigation cycles later in this lab are heading.

@@ -1,66 +1,48 @@
-# 🛡️ Lesson 020: Suspicious Files Review Challenge
+# 🛡️ Suspicious Files Review
+
+![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-blue?style=flat-square&logo=powershell&logoColor=white) ![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green?style=flat-square) ![Category](https://img.shields.io/badge/Category-File%20System%20Investigation-informational?style=flat-square) ![Security](https://img.shields.io/badge/Security-File%20Triage-orange?style=flat-square) ![Project](https://img.shields.io/badge/Project-Suspicious%20Files%20Review-purple?style=flat-square)
 
 ---
 
 ## 📌 Executive Summary
 
-This challenge focused on performing a filesystem investigation of the Downloads directory. The objective was to identify potentially suspicious files by reviewing file counts, large files, executable files, hidden files, and overall directory contents.
+**Core Technical Focus:**
+Collected every file in the Downloads directory (including hidden ones) with `Get-ChildItem -Force`, then used sorting and filtering to review file counts, large files, executables, hidden files, and file age.
 
-The investigation applied the file discovery, attribute analysis, and file filtering techniques learned throughout the Filesystem Investigation cycle.
-
----
-
-## 🎯 Challenge Scenario
-
-A user reported unusual system behavior after downloading multiple files.
-
-As the investigating analyst, I was tasked with:
-
-- Reviewing the Downloads directory.
-- Identifying large files.
-- Reviewing executable files.
-- Examining hidden files.
-- Providing an overall assessment of potential risks.
+**Defensive Impact:**
+Downloads is one of the most common places for malicious files to land. A structured review lets an analyst quickly separate routine software from files that need deeper analysis.
 
 ---
 
-## 🔎 Questions to Answer
+## 🎯 Objective & Challenge
 
-### 1. How many files were identified?
-
-### 2. Which files were the largest?
-
-### 3. Which executable files required review?
-
-### 4. Were any hidden files identified?
-
-### 5. What conclusions can be drawn from the investigation?
+*Review a user's Downloads directory after reports of unusual system behavior and determine whether any files appear suspicious.*
 
 ---
 
-## 🧠 Investigation Approach
+## 🔐 Cybersecurity Context
 
-To answer these questions, I:
+A user reported unusual system behavior after downloading multiple files. As the investigating analyst, I needed to answer:
 
-1. Collected all files from the Downloads directory.
-2. Counted the total number of files.
-3. Sorted files by size to identify the largest artifacts.
-4. Filtered executable files for review.
-5. Reviewed hidden files and their attributes.
-6. Documented findings and observations.
+- How many files are present?
+- Which files are the largest?
+- Which executables need review?
+- Are there hidden files, and what are they?
+- What conclusions can be drawn?
+
+Malware often arrives as an executable or archive in Downloads, and hidden attributes are sometimes used to keep files out of sight. A methodical review of size, type, visibility, and age helps decide where to focus.
 
 ---
 
-## 💻 My Solution
+## 🛠️ Implementation & Code
 
 ### Collect Files
 
 ```powershell
 $file = Get-ChildItem "$env:USERPROFILE\Downloads" -Force
 ```
-<img width="571" height="53" alt="image" src="https://github.com/user-attachments/assets/6b493ea9-cb9e-48e7-806a-498978500510" />
 
----
+<img width="571" height="53" alt="image" src="https://github.com/user-attachments/assets/6b493ea9-cb9e-48e7-806a-498978500510" />
 
 ### Count Files
 
@@ -70,20 +52,21 @@ $file.Count
 
 <img width="288" height="35" alt="image" src="https://github.com/user-attachments/assets/9a15c8af-067d-49c6-9f27-395b7e85e31c" />
 
-
 ### Identify Largest Files
 
 ```powershell
 $file |
-    Sort-Object Length -Descending |
-    Select-Object -First 5 Name, Length
+Sort-Object Length -Descending |
+Select-Object -First 5 Name, Length
 ```
 
 *[screenshot removed]*
 
 ---
 
-### Count Executables
+### Additional Examples
+
+#### Count Executables
 
 ```powershell
 ($file | Where-Object Extension -eq ".exe").Count
@@ -91,33 +74,27 @@ $file |
 
 <img width="485" height="44" alt="image" src="https://github.com/user-attachments/assets/2690b7da-1abc-474e-81dc-5a4e65b2a3ce" />
 
----
-
-### Review Executables
+#### Review Executables
 
 ```powershell
 $file |
-    Where-Object Extension -eq ".exe"
+Where-Object Extension -eq ".exe"
 ```
 
 *[screenshot removed]*
 
----
-
-### Find Newest Executable
+#### Find Newest Executable
 
 ```powershell
 $file |
-    Where-Object Extension -eq ".exe" |
-    Sort-Object LastWriteTime -Descending |
-    Select-Object -First 1 Name, LastWriteTime
+Where-Object Extension -eq ".exe" |
+Sort-Object LastWriteTime -Descending |
+Select-Object -First 1 Name, LastWriteTime
 ```
 
 *[screenshot removed]*
 
----
-
-### Count Hidden Files
+#### Count Hidden Files
 
 ```powershell
 ($file | Where-Object Attributes -like "*Hidden*").Count
@@ -125,82 +102,58 @@ $file |
 
 <img width="585" height="40" alt="image" src="https://github.com/user-attachments/assets/689d30a4-30ec-46d5-b1b8-3bfc1d4926fa" />
 
----
-
-### Review Hidden Files
+#### Review Hidden Files
 
 ```powershell
 $file |
-    Where-Object Attributes -like "*Hidden*"
+Where-Object Attributes -like "*Hidden*"
 ```
 
 *[screenshot removed]*
 
----
-
-### Identify Largest Hidden Files
+#### Identify Largest Hidden Files
 
 ```powershell
 $file |
-    Where-Object Attributes -like "*Hidden*" |
-    Sort-Object Length -Descending |
-    Select-Object -First 5 Name, Length
+Where-Object Attributes -like "*Hidden*" |
+Sort-Object Length -Descending |
+Select-Object -First 5 Name, Length
 ```
 
 <img width="466" height="209" alt="image" src="https://github.com/user-attachments/assets/844dd747-bdb6-4b63-abe1-aebccbea7c46" />
 
----
-
-### Identify Oldest Files
+#### Identify Oldest Files
 
 ```powershell
 $file |
-    Sort-Object LastWriteTime |
-    Select-Object -First 5 Name, LastWriteTime
+Sort-Object LastWriteTime |
+Select-Object -First 5 Name, LastWriteTime
 ```
 
 <img width="520" height="197" alt="image" src="https://github.com/user-attachments/assets/bd7236a0-203b-481c-b2b0-30b177424960" />
 
----
-
-### Largest Non-Executable Files
+#### Largest Non-Executable Files
 
 ```powershell
 $file |
-    Where-Object Extension -ne ".exe" |
-    Sort-Object Length -Descending |
-    Select-Object -First 5 Name, Length
+Where-Object Extension -ne ".exe" |
+Sort-Object Length -Descending |
+Select-Object -First 5 Name, Length
 ```
 
 *[screenshot removed]*
 
-
-
 ---
 
-## 📊 Investigation Results
+### Investigation Findings
 
-### Total Files
+| Metric | Result |
+|--------|--------|
+| Total files | 175 |
+| Executable files | 27 |
+| Hidden files | 9 |
 
-```text
-175 Files
-```
-
-### Executable Files
-
-```text
-27 Executable Files
-```
-
-### Hidden Files
-
-```text
-9 Hidden Files
-```
-
----
-
-### Largest Files
+#### Largest Files
 
 | File | Size |
 |--------|--------|
@@ -210,25 +163,9 @@ $file |
 | [REDACTED].exe | 407 MB |
 | Microsoft.WebView2.FixedVersionRuntime.143.0.3650.66.x64.cab | 275 MB |
 
-#### Observation
+The largest file, `Windows.iso` (about 4.89 GB), appears to be legitimate Windows installation media.
 
-The largest file identified was:
-
-```text
-Windows.iso
-```
-
-at approximately:
-
-```text
-4.89 GB
-```
-
-This appears to be legitimate Windows installation media.
-
----
-
-### Largest Executables
+#### Largest Executables
 
 | File | Size |
 |--------|--------|
@@ -238,41 +175,13 @@ This appears to be legitimate Windows installation media.
 | [REDACTED] | 84 MB |
 | voxpro5_2_0_1_setup.exe | 49 MB |
 
-#### Observation
+The executables are associated with [REDACTED], [REDACTED], VoxPro, and other administrative and productivity tools. No obviously suspicious executable names were identified.
 
-The executable files appear to be associated with:
+#### Newest Executable
 
-- [REDACTED]
-- [REDACTED]
-- VoxPro
-- Administrative software
-- Productivity tooling
+`BCUninstaller_6.2.0_setup.exe`, modified July 22, 2026. The filename is consistent with Bulk Crap Uninstaller, a legitimate software removal utility commonly used by technical users and administrators.
 
-No obviously suspicious executable names were identified.
-
----
-
-### Newest Executable
-
-```text
-BCUninstaller_6.2.0_setup.exe
-```
-
-Modified:
-
-```text
-July 22, 2026
-```
-
-#### Observation
-
-The filename appears consistent with Bulk Crap Uninstaller (BCUninstaller), a legitimate software removal utility commonly used by technical users and administrators.
-
----
-
-### Hidden Files
-
-The largest hidden files identified were:
+#### Hidden Files
 
 | File | Size |
 |--------|--------|
@@ -282,19 +191,9 @@ The largest hidden files identified were:
 | ~WRL0005.tmp | 21 KB |
 | desktop.ini | 282 B |
 
-#### Observation
+The hidden files are temporary application files, Microsoft Office lock files, and standard Windows configuration files. No hidden executables or unusually large hidden files were identified.
 
-The hidden files appear to be:
-
-- Temporary application files
-- Microsoft Office lock files
-- Standard Windows configuration files
-
-No hidden executable files or unusually large hidden files were identified.
-
----
-
-### Oldest Files
+#### Oldest Files
 
 | File | Modified |
 |--------|--------|
@@ -304,15 +203,9 @@ No hidden executable files or unusually large hidden files were identified.
 | ~WRL0005.tmp | September 24, 2025 |
 | ~$ble labels WOA.docx | September 25, 2025 |
 
-#### Observation
+Several hidden temporary files date back to 2024, showing that the Downloads directory holds remnants of older activity and has never been fully cleaned.
 
-While most files in the Downloads folder are relatively recent, several hidden temporary files date back to 2024.
-
-This indicates the Downloads directory contains remnants of historical activity and was not completely reset.
-
----
-
-### Largest Non-Executable Files
+#### Largest Non-Executable Files
 
 | File | Size |
 |--------|--------|
@@ -322,72 +215,61 @@ This indicates the Downloads directory contains remnants of historical activity 
 | [REDACTED] | 145 MB |
 | [REDACTED] | 145 MB |
 
-#### Observation
+`SysinternalsSuite.zip` is noteworthy because Sysinternals tools are used by administrators and responders, but also by attackers. In this context it is consistent with the user's technical role.
 
-The presence of:
+### Analyst Assessment
 
-```text
-SysinternalsSuite.zip
-```
+The software found ([REDACTED], [REDACTED], Audacity, Microsoft WebView2, Sysinternals Suite, VoxPro) is consistent with a workstation used for technical support, administration, and broadcast operations.
 
-is noteworthy because Sysinternals tools are commonly used by administrators, security analysts, incident responders, and threat hunters when performing host investigations.
-
----
-
-## 🧠 Analyst Assessment
-
-### Observations
-
-- The Downloads directory contained 175 files.
-- 27 executable files were present.
-- 9 hidden files were identified.
-- The largest file was a Windows installation image.
-- The newest executable was BCUninstaller.
-- Hidden files consisted primarily of Office lock files, temporary files, and Windows configuration artifacts.
-- No hidden executables were discovered.
-- No obviously suspicious filenames were identified.
-
-### Software Observed
-
-Examples of software and administrative utilities identified during the investigation included:
-
-```text
-[REDACTED]
-[REDACTED]
-Audacity
-Microsoft WebView2
-Sysinternals Suite
-VoxPro
-```
-
-These applications appear consistent with a workstation used for technical support, administration, and broadcast operations.
-
----
-
-## 🔍 Conclusion
-
-Based on:
-
-- File size analysis
-- Executable inventory
-- Hidden file review
-- File age analysis
-- File extension review
-
-No immediately suspicious artifacts were identified during the investigation. Additional investigation would only be warranted if:
+Based on file size analysis, the executable inventory, the hidden file review, and file age analysis, no immediately suspicious artifacts were identified. Further investigation would be warranted if:
 
 - A specific IOC was provided.
 - A suspicious filename was identified.
 - A timeline-based investigation was required.
 - Process or network activity suggested a compromised file.
 
+**Next steps to strengthen this review:** check file hashes with `Get-FileHash`, verify publisher signatures with `Get-AuthenticodeSignature`, and read the `Zone.Identifier` stream to confirm where each executable was downloaded from.
+
 ---
 
-## 🧠 What I Learned
+## 🆕 New Command Introduced
 
-- Applied file discovery and filtering techniques during an investigation.
-- Used sorting and filtering to prioritize review efforts.
-- Identified and analyzed executable files.
-- Reviewed hidden artifacts and file attributes.
-- Practiced documenting evidence and supporting observations.
-- Learned how to develop an evidence-based analyst assessment.
+### Get-ChildItem -Force
+
+This project used the `-Force` parameter of `Get-ChildItem` to address **hidden files being left out of a normal directory listing**.
+
+Example:
+
+```powershell
+$file = Get-ChildItem "$env:USERPROFILE\Downloads" -Force
+```
+
+### Why It Was Useful
+
+Without `-Force`, hidden and system files do not appear in the results, which is exactly where something trying to avoid notice would sit. Adding it made the hidden file review possible.
+
+### Comparison
+
+| Approach | Benefit | Limitation |
+|-----------|-----------|-----------|
+| `Get-ChildItem` | Clean, readable listing | Silently skips hidden and system files |
+| `Get-ChildItem -Force` | Complete listing, including hidden files | More noise to filter through |
+
+---
+
+## ✅ Key Takeaways
+
+- **Complete Collection:** Used `-Force` so hidden files were included in the evidence.
+- **Prioritized Review:** Used sorting and filtering to focus on large, executable, hidden, and old files.
+- **Context-Driven Analysis:** Judged each finding against the user's role rather than treating every tool as suspicious.
+- **Documented Assessment:** Produced an evidence-based conclusion with clear criteria for escalation.
+
+---
+
+## 🧠 Lessons Learned
+
+This challenge combined the file discovery, attribute analysis, and filtering techniques from the File System Investigation cycle into one review. Breaking the directory down by size, type, visibility, and age turned 175 files into a short list of things worth explaining, and each one had a legitimate explanation. The review also showed the limits of name-based analysis: hashes, signatures, and download origin would make the conclusion much stronger.
+
+### New Concepts Integration
+
+The `-Force` parameter is a small change with a big impact. A file listing that hides hidden files gives an incomplete picture, and in an investigation an incomplete picture can lead to a wrong conclusion. Collecting everything first and filtering afterwards is the safer pattern.

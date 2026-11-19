@@ -1,97 +1,62 @@
-# 🛡️ Lesson 025: Security Evidence Report Challenge
+# 🛡️ Security Evidence Report
 
-[![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-5391FE?logo=powershell&logoColor=white)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Category](https://img.shields.io/badge/Category-Evidence%20Reporting-blue)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Security](https://img.shields.io/badge/Security-Evidence%20Collection-red)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
-[![Project](https://img.shields.io/badge/Project-Security%20Evidence%20Report-purple)](https://github.com/Shawn-Nichol/PowerShell-Automation-Lab-)
+![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-blue?style=flat-square&logo=powershell&logoColor=white) ![Difficulty](https://img.shields.io/badge/Difficulty-Beginner-green?style=flat-square) ![Category](https://img.shields.io/badge/Category-Evidence%20Reporting-informational?style=flat-square) ![Security](https://img.shields.io/badge/Security-Evidence%20Collection-orange?style=flat-square) ![Project](https://img.shields.io/badge/Project-Security%20Evidence%20Report-purple?style=flat-square)
+
+---
+
 ## 📌 Executive Summary
 
-This challenge focused on collecting and documenting evidence from a Windows workstation using PowerShell. The objective was to gather key system metrics, organize the findings into a structured report, and provide an evidence-based assessment rather than relying on assumptions.
+**Core Technical Focus:**
+Collected the computer name, process count, service count, and Downloads file count into a single `PSCustomObject`, displayed it as a report, and exported it to CSV.
 
-The investigation applied the reporting, formatting, and evidence collection techniques learned throughout the Evidence Reporting cycle.
-
-## 🎯 Challenge Scenario
-
-A workstation was flagged for review after a user reported unusual system behavior.
-
-As the investigating analyst, I was tasked with:
-
-- Collecting baseline system evidence.
-- Reviewing process and service inventories.
-- Reviewing file inventory data.
-- Documenting collection observations.
-- Providing an analyst assessment based on collected evidence.
-
-
-## 🔎 Questions to Answer
-
-### 1. Which computer was investigated?
-
-### 2. How many processes were running?
-
-### 3. How many services were present?
-
-### 4. How many files existed in Downloads?
-
-### 5. Were any collection warnings observed?
-
-### 6. What conclusions could be made from the collected evidence?
+**Defensive Impact:**
+A structured, exportable evidence record lets findings be shared, compared against later collections, and reviewed by someone else instead of living only in a console window.
 
 ---
 
-## 🧠 Investigation Approach
+## 🎯 Objective & Challenge
 
-To answer these questions, I:
-
-1. Collected the computer name.
-2. Counted running processes.
-3. Counted installed services.
-4. Counted files within the Downloads directory.
-5. Organized the results into a structured report object.
-6. Reviewed collection output for warnings.
-7. Documented observations and findings.
+*Collect baseline evidence from a flagged workstation, organize it into a structured report, and provide an evidence-based assessment.*
 
 ---
 
-## 💻 My Solution
+## 🔐 Cybersecurity Context
+
+A workstation was flagged for review after a user reported unusual system behavior. The analyst needed to record:
+
+- Which computer was investigated
+- How many processes were running
+- How many services were present
+- How many files were in Downloads
+- Whether any collection warnings occurred
+
+Evidence that is structured and exported can be attached to a ticket, compared with a known-good baseline, or handed off to another analyst.
+
+---
+
+## 🛠️ Implementation & Code
 
 ### Create Evidence Report
 
 ```powershell
-$report = [PSCustomObject]@{
-    ComputerName  = $env:COMPUTERNAME
-    ProcessCount  = (Get-Process).Count
-    ServiceCount  = (Get-Service).Count
-    DownloadFiles = (Get-ChildItem "$env:USERPROFILE\Downloads").Count
+$CompReport = [PSCustomObject]@{
+    ComputerName    = $env:COMPUTERNAME
+    ProcessCount    = (Get-Process).Count
+    ServiceCount    = (Get-Service).Count
+    DownloadedFiles = (Get-ChildItem "$env:USERPROFILE\Downloads").Count
 }
 ```
 
-### Display Evidence Report
-
-```powershell
-$report | Format-List
-```
-
-### Export Evidence Report
-
-```powershell
-$report |
-    Export-Csv "$env:USERPROFILE\Downloads\Lesson25.csv" -NoTypeInformation
-```
-
----
-
-## 📊 Investigation Results
-
-### Computer Information
-
-```text
-Computer Name: ######
-```
 <img width="739" height="116" alt="image" src="https://github.com/user-attachments/assets/bbf433c2-5570-4be7-b92f-653eb21eb542" />
 
-### Evidence Summary
+### Example Usage
+
+```powershell
+$CompReport | Format-List
+```
+
+Example Output:
+
 ```text
 PS C:\> $CompReport | Format-List
 
@@ -101,59 +66,42 @@ ServiceCount    : 320
 DownloadedFiles : 181
 ```
 
-```text
-Process Count: 326
-Service Count: 320
-Downloaded Files: 181
-```
-
-### Report Output
-
-```text
-ComputerName  : #######
-ProcessCount  : 326
-ServiceCount  : 320
-DownloadFiles : 181
-```
-Save report to a CSV file. 
-<img width="731" height="51" alt="image" src="https://github.com/user-attachments/assets/56ec28df-dc67-4f82-bf87-95d499cbe983" />
-
 ---
 
-## 🔍 Analyst Observations
+### Additional Examples
 
-- Evidence collection completed successfully.
-- Process, service, and file inventories were successfully collected.
-- Structured evidence was organized into a PowerShell custom object.
-- The report was suitable for formatting and export.
-- Previous evidence collection activities identified access warnings when querying protected Windows services.
+#### Export Evidence Report
 
-### Collection Notes
+```powershell
+$CompReport |
+    Export-Csv "$env:USERPROFILE\Downloads\Lesson25.csv" -NoTypeInformation
+```
 
-During earlier evidence collection activities, the following services generated access-related warnings:
+<img width="731" height="51" alt="image" src="https://github.com/user-attachments/assets/56ec28df-dc67-4f82-bf87-95d499cbe983" />
+
+#### Collection Warnings
+
+During earlier evidence collection, these services generated access-related warnings when queried:
 
 ```text
 IsolationSession
 WaaSMedicSvc
 ```
 
-These warnings did not prevent evidence collection from completing successfully.
+These warnings did not prevent evidence collection from completing.
 
 ---
 
-## 🧠 Analyst Assessment
+### Analyst Assessment
 
-```text
-No suspicious activity identified during baseline evidence collection.
-```
+| Evidence | Result |
+|--------|--------|
+| Computer name | [REDACTED] |
+| Process count | 326 |
+| Service count | 320 |
+| Downloaded files | 181 |
 
-The workstation appears to be operating normally based on the evidence reviewed.
-
-Key observations:
-
-- Service counts appear within expected operating ranges.
-- Downloads inventory size appears consistent with routine workstation usage.
-- No evidence collected during this exercise indicated suspicious system activity.
+No suspicious activity was identified during baseline evidence collection. Service counts were within expected ranges, and the Downloads inventory size was consistent with routine workstation use.
 
 Additional investigation would only be warranted if:
 
@@ -161,9 +109,47 @@ Additional investigation would only be warranted if:
 - A suspicious file or process is reported.
 - Additional evidence sources suggest abnormal behavior.
 
+---
 
-## 🧠 What I Learned
+## 🆕 New Command Introduced
 
-- Applied PowerShell reporting techniques during an investigation.
-- Collected evidence from multiple Windows sources.
-- Created structured evidence using PSCustomObject.
+### Export-Csv
+
+This project introduced the `Export-Csv` cmdlet to address **preserving investigation results outside the PowerShell session**.
+
+Example:
+
+```powershell
+$CompReport |
+    Export-Csv "$env:USERPROFILE\Downloads\Lesson25.csv" -NoTypeInformation
+```
+
+### Why It Was Useful
+
+Console output disappears when the window closes. Exporting the report to CSV created a record that can be opened in Excel, attached to a ticket, or compared with a later collection.
+
+### Comparison
+
+| Approach | Benefit | Limitation |
+|-----------|-----------|-----------|
+| `Format-List` / console output | Easy to read immediately | Lost when the session ends |
+| `Export-Csv` | Persistent, shareable, comparable | Flattens nested objects |
+
+---
+
+## ✅ Key Takeaways
+
+- **Structured Evidence:** Used `PSCustomObject` to combine several evidence sources into one record.
+- **Readable Reporting:** Used `Format-List` to present the report clearly.
+- **Evidence Preservation:** Used `Export-Csv` to save the findings for later review.
+- **Honest Assessment:** Documented collection warnings and stated clearly what would justify escalation.
+
+---
+
+## 🧠 Lessons Learned
+
+This challenge combined the Evidence Reporting cycle into one workflow: collect, structure, display, and export. Compared with running separate commands and reading the console, the report object made the evidence consistent and the export made it durable. Recording the access warnings mattered too, because a good report says what could not be collected as well as what was.
+
+### New Concepts Integration
+
+`Export-Csv` turned the investigation from something that only existed on screen into an artifact. That is the difference between running commands and producing evidence, and it sets up the reusable audit function built in Cycle 6.
