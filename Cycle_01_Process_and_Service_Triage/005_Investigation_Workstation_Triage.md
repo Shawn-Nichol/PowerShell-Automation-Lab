@@ -20,20 +20,6 @@ Gives an analyst a fast, read-only way to check whether a user's performance com
 
 ---
 
-## 🔄 Investigation Workflow
-
-```mermaid
-flowchart TD
-    A["User reports slow workstation"] --> B["Get-Process: find non-responding apps"]
-    B --> C["Get-Process: rank by memory usage"]
-    C --> D["Get-Service: review running services"]
-    D --> E{"Signs of compromise?"}
-    E -- No --> F["Assessment: performance issue, no malicious activity"]
-    E -- Yes --> G["Escalate for deeper investigation"]
-```
-
----
-
 ## 🔐 Cybersecurity Context
 
 Workstation triage is one of the first steps in incident response and troubleshooting. Before escalating, an analyst needs to know:
