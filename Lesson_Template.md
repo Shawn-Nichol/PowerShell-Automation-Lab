@@ -48,6 +48,3 @@
 - **[Takeaway 2]:** [When to use it]
 - **[Takeaway 3]:** [A gotcha, limitation, or tip]
 
----
-
-➡️ **Next:** [Lesson ### – Next Topic](./###_Next_Topic.md)
