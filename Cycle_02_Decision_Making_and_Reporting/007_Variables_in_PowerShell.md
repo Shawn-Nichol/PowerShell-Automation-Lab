@@ -48,7 +48,26 @@ $Service.Status
 ```powershell
 $Processes = Get-Process
 ```
-*[screenshot removed]*
+```text
+PS C:\> $Processes = Get-Process
+PS C:\> $Processes
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName
+-------  ------    -----      -----     ------     --  -- -----------
+    157      10     2740       6224       2.28   9444   0 AggregatorHost
+    349      42    12560       9624       3.31   7144   1 AOTListenerService
+    365      20    13112       7420       3.06  20344   1 AppActions
+    570      28    64880      18556       2.95   8536   1 ApplicationFrameHost
+     70       8     1508       1828       0.52  11020   1 AppUIMonitor
+   1195      84    60444      39028     292.33   4168   0 [REDACTED]
+    578      23     7384      41580       0.42  13932   1 backgroundTaskHost
+    476      21    30096      36088       1.86  19560   1 backgroundTaskHost
+    336      28    17280        692       0.30  23904   1 backgroundTaskHost
+    248      15     4824       3864       4.91  11988   1 [REDACTED]
+    438      26     6344      11636      19.98   4636   0 [REDACTED]
+   1629      55    37216      55016     356.19  12972   0 [REDACTED]
+    279      23    37268      88728       7.70   1108   1 chrome
+```
 
 
 ```powershell

@@ -57,7 +57,19 @@ Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.zip"
 Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.csv"
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.csv"
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           8/11/2026  4:16 PM          54892 [REDACTED].csv
+-a---            9/1/2026  3:34 PM           6988 [REDACTED].csv
+-a---           8/12/2026  3:16 PM           6184 [REDACTED].csv
+-a---           9/11/2026 11:44 AM          99395 [REDACTED].csv
+-a---          10/29/2025  4:14 PM           3022 Wide Orbit Checklist(Sheet1).csv
+```
 
 
 ### Search for Executable Files Recursively

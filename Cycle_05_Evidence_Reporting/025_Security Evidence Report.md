@@ -92,7 +92,14 @@ Computer Name: ######
 <img width="739" height="116" alt="image" src="https://github.com/user-attachments/assets/bbf433c2-5570-4be7-b92f-653eb21eb542" />
 
 ### Evidence Summary
-*[screenshot removed]*
+```text
+PS C:\> $CompReport | Format-List
+
+ComputerName    : [REDACTED]
+ProcessCount    : 326
+ServiceCount    : 320
+DownloadedFiles : 181
+```
 
 ```text
 Process Count: 326

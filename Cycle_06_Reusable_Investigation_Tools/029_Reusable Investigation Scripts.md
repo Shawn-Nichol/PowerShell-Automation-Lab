@@ -106,7 +106,20 @@ function Get-InvestigationReport {
 }
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> function Get-InvestigationReport {
+>>     [PSCustomObject]@{
+>>         Computer  = $env:COMPUTERNAME
+>>         Analyst   = "Shawn"
+>>         Processes = (Get-Process).count
+>>     }
+>> }
+PS C:\> Get-InvestigationReport
+
+Computer   Analyst Processes
+--------   ------- ---------
+[REDACTED] Shawn         342
+```
 
 
 ### Run Investigation Report
@@ -123,7 +136,20 @@ Computer     Analyst Processes
 ########### Shawn         342
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> function Get-InvestigationReport {
+>>     [PSCustomObject]@{
+>>         Computer  = $env:COMPUTERNAME
+>>         Analyst   = "Shawn"
+>>         Processes = (Get-Process).count
+>>     }
+>> }
+PS C:\> Get-InvestigationReport
+
+Computer   Analyst Processes
+--------   ------- ---------
+[REDACTED] Shawn         342
+```
 
 
 ---

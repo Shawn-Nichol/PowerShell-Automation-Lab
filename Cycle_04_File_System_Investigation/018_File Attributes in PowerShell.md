@@ -51,7 +51,32 @@ Get-ChildItem |
     Select-Object Name, Attributes
 ```
 
-*[screenshot removed]*
+```text
+PS C:\Downloads> Get-ChildItem |
+>>     Select-Object Name, Attributes
+
+Name
+----
+DetectabilityHistoryL50067
+Psw
+SennheiserAssetCollection-2025-12-12 22_12
+[REDACTED]
+08-May-2026_APL_-_General_Req_2024.pdf
+100_days_of_python.png
+2766984423725746459.jpeg
+6892374335223057544.jpeg
+[REDACTED].pdf
+Adopting_Active_Risk_for_Vulnerability_Prioritization.pdf
+AIDR+Defining+the+Category+That+Will+Secure+the+Next+Decade+ (1).ics
+AIDR+Defining+the+Category+That+Will+Secure+the+Next+Decade+.ics
+AnaDig Encoder Manual 1050-1645 RevA.pdf
+[REDACTED].xlsx
+[REDACTED].csv
+audacity-win-3.7.7-64bit.exe
+audacity-win-3.7.8-64bit.exe
+BCUninstaller_6.2.0_setup.exe
+...
+```
 
 
 ### Display Hidden Files

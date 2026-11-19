@@ -38,7 +38,24 @@ Get-Process |
 Select-Object ProcessName,
               Id
 ```
-*[screenshot removed]*
+```text
+PS C:\WINDOWS\system32> Get-Process |
+>> Select-Object ProcessName,
+>> Id -First 10
+
+ProcessName             Id
+-----------             --
+AggregatorHost        8676
+AOTListenerService    1704
+AppActions           14712
+ApplicationFrameHost 13424
+AppUIMonitor         15596
+audiodg              23892
+[REDACTED]            4512
+[REDACTED]            4784
+[REDACTED]            5280
+chrome                2032
+```
 
 
 ```powershell
@@ -47,7 +64,25 @@ Select-Object ProcessName,
               Id,
               Responding
 ```
-*[screenshot removed]*
+```text
+PS C:\WINDOWS\system32> Get-Process |
+>> Select-Object ProcessName,
+>> Id,
+>> Responding -First 10
+
+ProcessName             Id Responding
+-----------             -- ----------
+AggregatorHost        8676       True
+AOTListenerService    1704       True
+AppActions           14712       True
+ApplicationFrameHost 13424       True
+AppUIMonitor         15596       True
+[REDACTED]            4512       True
+backgroundTaskHost   23036       True
+[REDACTED]            4784       True
+[REDACTED]            5280       True
+chrome                2032       True
+```
 
 ```powershell
 Get-Service |
@@ -64,7 +99,27 @@ Select-Object ProcessName,
               WorkingSet64 |
 Sort-Object WorkingSet64 -Descending
 ```
-*[screenshot removed]*
+```text
+PS C:\WINDOWS\system32> Get-Process |
+>> Select-Object ProcessName,
+>> Id,
+>> WorkingSet64 |
+>> Sort-Object Workingset64 -Descending |
+>> Select-Object -First 10
+
+ProcessName            Id WorkingSet64
+-----------            -- ------------
+msedgewebview2      20696   1007202304
+msedgewebview2       6500    894038016
+[REDACTED]           9336    715669504
+chrome               3608    555532288
+Memory Compression   3632    539697152
+Grammarly.Desktop   26592    366534656
+chrome              16808    362377216
+explorer            13784    302583808
+chrome              31236    237596672
+chrome              22988    231211008
+```
 
 
 ## 🧠 What I Learned

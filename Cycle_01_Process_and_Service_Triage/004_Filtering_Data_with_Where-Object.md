@@ -38,7 +38,26 @@ Filtering is essential during investigations because analysts rarely need every 
 Get-Service |
 Where-Object Status -eq 'Running'
 ```
-*[screenshot removed]*
+```text
+PS H:\> Get-Service |
+>> Where-Object Status -eq 'Running'
+
+Status   Name               DisplayName
+------   ----               -----------
+Running  Appinfo            Application Information
+Running  AppXSvc            AppX Deployment Service (AppXSVC)
+Running  AudioEndpointBu... Windows Audio Endpoint Builder
+Running  Audiosrv           Windows Audio
+Running  [REDACTED]         [REDACTED]
+Running  BFE                Base Filtering Engine
+Running  BITS               Background Intelligent Transfer Ser...
+Running  BluetoothUserSe... Bluetooth User Support Service_11b2b4c
+Running  [REDACTED]         [REDACTED]
+Running  BrokerInfrastru... Background Tasks Infrastructure Ser...
+Running  BTAGService        Bluetooth Audio Gateway Service
+Running  BthAvctpSvc        AVCTP service
+Running  bthserv            Bluetooth Support Service
+```
 
 ```powershell
 Get-Service |

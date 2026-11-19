@@ -59,7 +59,20 @@ Get-Process |
     Select-Object Name, Id
 ```
 
-*[screenshot removed]*
+```text
+PS C:\Windows\System32> Get-Process |
+>>     Select-Object Name, ID
+
+Name                          Id
+----                          --
+AggregatorHost              8356
+AOTListenerService         11056
+AppActions                  5048
+ApplicationFrameHost       19324
+AppUIMonitor               20224
+audiodg                    20624
+[REDACTED]                  5136
+```
 
 ---
 
