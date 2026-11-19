@@ -60,7 +60,19 @@ Sort-Object Length -Descending |
 Select-Object -First 5 Name, Length
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> $file |
+>>     Sort-Object Length -Descending |
+>>     Select-Object -First 5 Name, Length
+
+Name                                                              Length
+----                                                              ------
+Windows.iso                                                   4893900800
+[REDACTED].exe                                                 850371936
+[REDACTED].exe                                                 501667168
+[REDACTED] (1).exe                                             407143776
+Microsoft.WebView2.FixedVersionRuntime.143.0.3650.66.x64.cab   275910565
+```
 
 ---
 
@@ -81,7 +93,25 @@ $file |
 Where-Object Extension -eq ".exe"
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> $file |
+>>     Where-Object Extension -eq ".exe"
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           4/27/2026 10:02 AM       18543040 audacity-win-3.7.7-64bit.exe
+-a---           6/18/2026  2:36 PM       20400664 audacity-win-3.7.8-64bit.exe
+-a---           7/22/2026  2:30 PM        9221652 BCUninstaller_6.2.0_setup.exe
+-a---           2/26/2026 11:11 AM      407143776 [REDACTED] (1).exe
+-a---           12/4/2025  2:20 PM      501667168 [REDACTED].exe
+-a---           12/4/2025  2:22 PM      850371936 [REDACTED].exe
+-a---           12/6/2025  1:52 PM       33267856 driver_booster_setup.exe
+-a---           5/12/2026  1:47 PM       19463448 MediaCreationTool_22H2.exe
+-a---           12/6/2025  1:40 AM        1694136 MicrosoftEdgeWebview2Setup (1).exe
+...
+```
 
 #### Find Newest Executable
 
@@ -92,7 +122,25 @@ Sort-Object LastWriteTime -Descending |
 Select-Object -First 1 Name, LastWriteTime
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> $file |
+>>     Where-Object Extension -eq ".exe"
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           4/27/2026 10:02 AM       18543040 audacity-win-3.7.7-64bit.exe
+-a---           6/18/2026  2:36 PM       20400664 audacity-win-3.7.8-64bit.exe
+-a---           7/22/2026  2:30 PM        9221652 BCUninstaller_6.2.0_setup.exe
+-a---           2/26/2026 11:11 AM      407143776 [REDACTED] (1).exe
+-a---           12/4/2025  2:20 PM      501667168 [REDACTED].exe
+-a---           12/4/2025  2:22 PM      850371936 [REDACTED].exe
+-a---           12/6/2025  1:52 PM       33267856 driver_booster_setup.exe
+-a---           5/12/2026  1:47 PM       19463448 MediaCreationTool_22H2.exe
+-a---           12/6/2025  1:40 AM        1694136 MicrosoftEdgeWebview2Setup (1).exe
+...
+```
 
 #### Count Hidden Files
 
@@ -109,7 +157,24 @@ $file |
 Where-Object Attributes -like "*Hidden*"
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> $file |
+>>     Where-Object Attributes -like "*Hidden*"
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a-h-           9/25/2025 10:48 AM            162 ~$ble labels WOA .docx
+-a-h-           7/17/2024  9:49 PM            162 ~$itical Thinking Touchstone 4.docx
+-a-h-          10/28/2025  1:30 PM            162 ~$ndows11_Minimum_Requirement_Check_Commands [REDACTED].docx
+-a-h-          11/10/2025 11:28 AM            162 ~$rformance Through Partnership - F2026 Coaching Guide.docx
+-a-h-           9/24/2025  5:03 PM          21860 ~WRL0005.tmp
+-a-h-           7/15/2024 11:30 PM          34360 ~WRL0284.tmp
+-a-h-           11/4/2025  3:46 PM          88663 ~WRL1962.tmp
+-a-h-           7/20/2024 12:48 AM          33773 ~WRL3265.tmp
+-a-hs           12/7/2025 10:12 PM            282 desktop.ini
+```
 
 #### Identify Largest Hidden Files
 
@@ -141,7 +206,20 @@ Sort-Object Length -Descending |
 Select-Object -First 5 Name, Length
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> $file |
+>>     Where-Object Extension -ne ".exe" |
+>>     Sort-Object Length -Descending |
+>>     Select-Object -First 5 Name, Length
+
+Name                                                              Length
+----                                                              ------
+Windows.iso                                                   4893900800
+Microsoft.WebView2.FixedVersionRuntime.143.0.3650.66.x64.cab   275910565
+SysinternalsSuite.zip                                          193515765
+[REDACTED].zip                                                 144989707
+[REDACTED] (1).zip                                             144989707
+```
 
 ---
 
@@ -160,7 +238,7 @@ Select-Object -First 5 Name, Length
 | Windows.iso | 4.89 GB |
 | [REDACTED].exe | 850 MB |
 | [REDACTED].exe | 501 MB |
-| [REDACTED].exe | 407 MB |
+| [REDACTED] (1).exe | 407 MB |
 | Microsoft.WebView2.FixedVersionRuntime.143.0.3650.66.x64.cab | 275 MB |
 
 The largest file, `Windows.iso` (about 4.89 GB), appears to be legitimate Windows installation media.
@@ -171,11 +249,11 @@ The largest file, `Windows.iso` (about 4.89 GB), appears to be legitimate Window
 |--------|--------|
 | [REDACTED].exe | 850 MB |
 | [REDACTED].exe | 501 MB |
-| [REDACTED].exe | 407 MB |
-| [REDACTED] | 84 MB |
+| [REDACTED] (1).exe | 407 MB |
+| [REDACTED].exe | 84 MB |
 | voxpro5_2_0_1_setup.exe | 49 MB |
 
-The executables are associated with [REDACTED], [REDACTED], VoxPro, and other administrative and productivity tools. No obviously suspicious executable names were identified.
+The executables are associated with remote access clients, VoxPro, and other administrative and productivity tools. No obviously suspicious executable names were identified.
 
 #### Newest Executable
 
@@ -212,14 +290,14 @@ Several hidden temporary files date back to 2024, showing that the Downloads dir
 | Windows.iso | 4.89 GB |
 | Microsoft.WebView2.FixedVersionRuntime.143.0.3650.66.x64.cab | 275 MB |
 | SysinternalsSuite.zip | 193 MB |
-| [REDACTED] | 145 MB |
-| [REDACTED] | 145 MB |
+| [REDACTED].zip | 145 MB |
+| [REDACTED] (1).zip | 145 MB |
 
 `SysinternalsSuite.zip` is noteworthy because Sysinternals tools are used by administrators and responders, but also by attackers. In this context it is consistent with the user's technical role.
 
 ### Analyst Assessment
 
-The software found ([REDACTED], [REDACTED], Audacity, Microsoft WebView2, Sysinternals Suite, VoxPro) is consistent with a workstation used for technical support, administration, and broadcast operations.
+The software found (remote access clients, Audacity, Microsoft WebView2, Sysinternals Suite, VoxPro) is consistent with a workstation used for technical support, administration, and broadcast operations.
 
 Based on file size analysis, the executable inventory, the hidden file review, and file age analysis, no immediately suspicious artifacts were identified. Further investigation would be warranted if:
 

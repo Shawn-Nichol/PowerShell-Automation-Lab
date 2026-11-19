@@ -39,7 +39,30 @@ Security analysts frequently search for specific file types during investigation
 Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.mp3"
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.mp3"
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           11/3/2025 10:51 AM       28768886 CFGQ PGM-11-01-2025-19-00.mp3
+-a---          11/26/2025  5:02 AM       28781633 CFGQ PGM-11-26-2025-04-00.mp3
+-a---           11/3/2025 10:48 AM       28791246 CFGQ-11-01-2025-19-00.mp3
+-a---           11/3/2025 10:46 AM       28779961 CFGQ-11-01-2025-20-00.mp3
+-a---          11/26/2025  5:04 AM       28781633 CFGQ-11-26-2025-04-00.mp3
+-a---          12/16/2025 11:18 AM       28784768 CFGQ-12-15-2025-21-00.mp3
+-a---          12/16/2025 11:18 AM       28796053 CFGQ-12-15-2025-22-00.mp3
+-a---          12/16/2025 11:18 AM       28788112 CFGQ-12-15-2025-23-00.mp3
+-a---            9/8/2026 12:25 PM       28795808 CHQR HD-09-08-2026-08-00.mp3
+-a---            9/8/2026 11:25 AM       28786440 CHQR PGM-09-08-2026-08-00.mp3
+-a---            9/8/2026 10:39 AM       14398090 CHQR-09-08-2026-07-00.mp3
+-a---            9/8/2026 10:39 AM       14400494 CHQR-09-08-2026-08-00.mp3
+-a---           4/27/2026 10:01 AM       28792918 CKRY PGM-04-24-2026-13-00.mp3
+-a---           4/27/2026 10:01 AM       28792918 CKRY PGM-04-24-2026-14-00 (1).mp3
+-a---           4/27/2026 10:00 AM       28792918 CKRY PGM-04-24-2026-14-00.mp3
+-a---           4/27/2026 10:03 AM       28616957 CKRY-04-24-2026-13-00.mp3
+```
 
 
 ### Search for ZIP Files
@@ -48,7 +71,23 @@ Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.mp3"
 Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.zip"
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.zip"
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---            8/5/2026 10:39 AM        3246652 currentLog_20260805.zip
+-a---            8/5/2026 10:48 AM       10789347 DetectabilityHistoryL50067 (1).zip
+-a---            8/5/2026 10:41 AM       10789081 DetectabilityHistoryL50067.zip
+-a---          10/17/2025  3:32 PM          67574 Logs.zip
+-a---            8/4/2026  4:14 PM          24958 Psw.zip
+-a---          12/12/2025  3:12 PM        4501577 SennheiserAssetCollection-2025-12-12 22_12.zip
+-a---           7/14/2026  1:31 PM      193515765 SysinternalsSuite.zip
+-a---           7/23/2026  2:12 PM      144989707 [REDACTED] (1).zip
+-a---           7/21/2026  2:18 PM      144989707 [REDACTED].zip
+```
 
 
 ### Search for CSV Files
@@ -78,7 +117,24 @@ Mode                 LastWriteTime         Length Name
 Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.exe" -Recurse
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-ChildItem "$env:USERPROFILE\Downloads" -Filter "*.exe" -Recurse
+
+    Directory: C:\Downloads
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           4/27/2026 10:02 AM       18543040 audacity-win-3.7.7-64bit.exe
+-a---           6/18/2026  2:36 PM       20400664 audacity-win-3.7.8-64bit.exe
+-a---           7/22/2026  2:30 PM        9221652 BCUninstaller_6.2.0_setup.exe
+-a---           2/26/2026 11:11 AM      407143776 [REDACTED] (1).exe
+-a---           12/4/2025  2:20 PM      501667168 [REDACTED].exe
+-a---           12/4/2025  2:22 PM      850371936 [REDACTED].exe
+-a---           12/6/2025  1:52 PM       33267856 driver_booster_setup.exe
+-a---           5/12/2026  1:47 PM       19463448 MediaCreationTool_22H2.exe
+-a---           12/6/2025  1:40 AM        1694136 MicrosoftEdgeWebview2Setup (1).exe
+...
+```
 
 
 ---
