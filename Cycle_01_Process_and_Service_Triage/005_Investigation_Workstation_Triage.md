@@ -91,12 +91,12 @@ One non-responsive application was identified. The process appeared to be the Wi
 | Process Name | PID | Working Set (Bytes) |
 |-------------|------|-------------------:|
 | Memory Compression | 3772 | 722,243,584 |
-| [REDACTED] | 4908 | 718,573,568 |
+| [EDR agent – redacted] | 4908 | 718,573,568 |
 | chrome | 16468 | 361,959,424 |
 | Grammarly.Desktop | 14348 | 358,510,592 |
 | msedgewebview2 | 18040 | 346,906,624 |
 
-The highest memory consumers included Windows Memory Compression, the enterprise endpoint security agent (`[REDACTED]`), Chrome, Grammarly Desktop, and Microsoft Edge WebView2.
+The highest memory consumers included Windows Memory Compression, the enterprise endpoint security (EDR) agent, Chrome, Grammarly Desktop, and Microsoft Edge WebView2.
 
 
 ### Running Services Reviewed
@@ -107,7 +107,7 @@ The highest memory consumers included Windows Memory Compression, the enterprise
 | AppXSvc | Running |
 | AudioEndpointBuilder | Running |
 | Audiosrv | Running |
-| [REDACTED]) | Running |
+| [Privilege management service – redacted] | Running |
 
 The reviewed services appeared healthy and operational.
 
@@ -118,7 +118,7 @@ The workstation appeared generally healthy during this investigation.
 
 One non-responsive process (`SystemSettings`) was identified, but this alone does not indicate malicious activity or system compromise. The process is associated with a standard Windows component and may have been temporarily unresponsive.
 
-Memory analysis revealed that Windows Memory Compression and the endpoint security agent (`[REDACTED]`) were consuming the largest amounts of memory. Both are expected system components and do not immediately suggest suspicious behavior.
+Memory analysis revealed that Windows Memory Compression and the endpoint security (EDR) agent were consuming the largest amounts of memory. Both are expected system components and do not immediately suggest suspicious behavior.
 
 Service review confirmed that core Windows and audio-related services were operating normally. No unusual process names, service failures, or obvious indicators of compromise were observed.
 
