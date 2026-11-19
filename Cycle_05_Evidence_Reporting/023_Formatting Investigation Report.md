@@ -49,7 +49,29 @@ Get-Process |
     Format-Table -AutoSize
 ```
 
-*[screenshot removed]*
+```text
+PS C:\> Get-Process |
+>>     Select-Object ProcessName, Id |
+>>     Format-Table -AutoSize
+
+ProcessName             Id
+-----------             --
+AggregatorHost        8892
+AOTListenerService    3564
+AppActions           19452
+ApplicationFrameHost  6836
+AppUIMonitor         29944
+audiodg              23636
+[REDACTED]            5092
+backgroundTaskHost   29604
+[REDACTED]            4684
+[REDACTED]           11632
+chrome                2780
+chrome                6644
+chrome                8028
+chrome                8824
+chrome                9776
+```
 
 ---
 

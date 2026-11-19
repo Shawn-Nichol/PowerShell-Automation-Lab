@@ -62,7 +62,23 @@ Get-Help Get-Service -Examples
 Get-Process |
 Select-Object -First 10
 ```
-*[screenshot removed]*
+```text
+PS H:\> Get-Process |
+>> Select-Object -First 10
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName
+-------  ------    -----      -----     ------     --  -- -----------
+    502      55    44220       8176      50.30  17668   1 advanced_ip_scanner
+    156      10     2376       4420              8676   0 AggregatorHost
+    350      41    11304      21016              1704   1 AOTListenerService
+    366      20    12812      23364       2.34  14712   1 AppActions
+    562      27    64716      22552       4.84  13424   1 ApplicationFrameHost
+     74       8     1424       1636       0.22  15596   1 AppUIMonitor
+   1206      85    62112      48796              4512   0 [REDACTED]
+    476      27     7196      12528              4784   0 [REDACTED]
+   1703      58    38312      49784              5280   0 [REDACTED]
+    303      24    27488      31324       1.53   1232   1 chrome
+```
 
 
 ## ✅ Key Takeaways

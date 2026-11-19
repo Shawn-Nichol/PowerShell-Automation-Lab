@@ -56,7 +56,25 @@ Select-Object ProcessName,
               Id,
               Responding -Frist 10
 ```
-*[screenshot removed]*
+```text
+PS C:\WINDOWS\system32> Get-Process |
+>> Select-Object ProcessName,
+>> Id,
+>> Responding -First 10
+
+ProcessName             Id Responding
+-----------             -- ----------
+AggregatorHost        8676       True
+AOTListenerService    1704       True
+AppActions           14712       True
+ApplicationFrameHost 13424       True
+AppUIMonitor         15596       True
+audiodg              19736       True
+[REDACTED]            4512       True
+backgroundTaskHost    2336       True
+backgroundTaskHost   17524       True
+[REDACTED]            4784       True
+```
 
 ---
 

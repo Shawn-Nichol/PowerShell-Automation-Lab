@@ -99,7 +99,19 @@ $process |
     Sort-Object WorkingSet -Descending |
     Select-Object -First 5 ProcessName, Id, WorkingSet
 ```
-*[screenshot removed]*
+```text
+PS C:\> $process |
+>>     Sort-Object WorkingSet -Descending |
+>>     Select-Object -First 5 ProcessName, Id, WorkingSet
+
+ProcessName           Id WorkingSet
+-----------           -- ----------
+[REDACTED]         20044  871481344
+msedgewebview2     23476  569020416
+Memory Compression  3672  545234944
+chrome              3096  314191872
+chrome             17072  304488448
+```
 
 ---
 

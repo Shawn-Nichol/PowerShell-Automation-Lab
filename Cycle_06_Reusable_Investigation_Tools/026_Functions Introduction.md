@@ -64,7 +64,11 @@ Get-SystemSummary
 ```
 
 <img width="223" height="21" alt="image" src="https://github.com/user-attachments/assets/ea97add7-8b45-4732-824d-f5029768f3a3" />
-*[screenshot removed]*
+```text
+Computer     Processes Services
+--------     --------- --------
+[REDACTED]         314      321
+```
 
 
 ---
